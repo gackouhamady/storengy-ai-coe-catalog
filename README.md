@@ -1,44 +1,65 @@
-# 🚀 Objectif du projet
-Prototyper un **“AI Use-Case Catalog”** pour Storengy CoE Data & IA, couvrant :
+# 🚀 Project Objective
 
-- **Identification & cadrage** de deux cas d’usage à fort enjeu (transition énergétique & RSE)  
-- **Modélisation Data Science** :
-  1. **Forecasting & détection d’anomalies** sur séries temporelles de capteurs (pression, température)  
-  2. **Assistant Génératif** (GenAI) pour la documentation technique et les procédures internes  
-- **Démonstrateur d’adoption** : interface locale simple (Streamlit) pour alimenter, visualiser et interagir  
-- **Pipeline MLOps léger** (MLflow, FastAPI), tests unitaires, documentation et mode « prêt Dataiku/GCP »
+Prototype an **“AI Use-Case Catalog”** for Storengy CoE Data & AI, covering:
 
----
+* **Identification & scoping** of two high-impact use cases (energy transition & CSR)
+* **Data Science modeling**:
 
-## 📅 Planning détaillé sur 5 jours ouvrés (+ 2 jours de buffer)
-
-| Jour   | Tâches clés                                                                                                                                                                                                                     |
-|:------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Jour 1 | - **Init repo & env** : `git init` + venv Python, `requirements.txt` (pandas, numpy, scikit-learn, prophet, torch, transformers, streamlit, mlflow, fastapi, uvicorn…) et `.gitignore`<br> - **Datasets synthétiques** :  <br>  • CSV capteurs (1 000 enregistrements)  <br>  • Corpus “procédures” (10 docs Markdown) |
-| Jour 2 | - **Ingestion & EDA** (`src/ingestion.py`) : lecture CSV capteurs & Markdown, nettoyage, normalisation, premières visualisations (matplotlib/Streamlit)                                                                       |
-| Jour 3 | - **Forecasting & détection d’anomalies** (`src/time_series_model.py`) :  <br>  • Prophet ou LSTM univarié pour prévoir la pression<br>  • Isolation Forest pour repérer anomalies<br>  • KPIs : MAE, recall anomalies    |
-| Jour 4 | - **Assistant Génératif** (`src/genai_model.py`) :  <br>  • Fine-tuning local de DistilGPT-2 sur le corpus Markdown<br>  • Endpoints Q&A (FastAPI)<br>  • Évaluation qualitative (prompt tests)                               |
-| Jour 5 | - **Pipeline & démonstrateur** (`src/app.py`) :  <br>  • Orchestration ingestion → prédiction capteurs → GenAI Q&A → dashboard Streamlit<br>  • Expériences MLflow (params & metrics)<br>  • Monitor sanity checks (> seuils) |
-| Jour 6 | - **Documentation & tests** :  <br>  • `README.md` (installation, usage, migration Dataiku/GCP)  <br>  • Diagramme du flow dans `docs/`  <br>  • Tests pytest pour chaque module                                            |
-| Jour 7 | - **Packaging & livraison** :  <br>  • Générer `requirements.txt` final  <br>  • Dockerfile (`python:3.10`) pour app FastAPI/Streamlit  <br>  • Commit, push sur GitHub + plan de déploiement Cloud Run/Vertex AI                  |
+  1. **Forecasting & anomaly detection** on sensor time series (pressure, temperature)
+  2. **Generative Assistant** (GenAI) for technical documentation and internal procedures
+* **Adoption demonstrator**: simple local interface (Streamlit) to feed, visualize, and interact
+* **Lightweight MLOps pipeline** (MLflow, FastAPI), unit tests, documentation, and “Dataiku/GCP-ready” mode
 
 ---
 
-## ⚙️ Structure Git finale
+## 📅 Detailed 5-day working plan (+ 2 days buffer)
+
+|    Day    | Key tasks                                                                                                                                                                              |
+| :-------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Day 1** | - **Init repo & env**: `git init` + Python venv, `requirements.txt` (pandas, numpy, scikit-learn, prophet, torch, transformers, streamlit, mlflow, fastapi, uvicorn…) and `.gitignore` |
+
+* **Synthetic datasets**:
+  • Sensor CSV (1,000 records)
+  • Procedures corpus (10 Markdown docs) |
+  \| **Day 2** | - **Ingestion & EDA** (`src/ingestion.py`): read sensor CSV & Markdown, cleaning, normalization, initial visualizations (matplotlib/Streamlit) |
+  \| **Day 3** | - **Forecasting & anomaly detection** (`src/time_series_model.py`):
+  • Prophet or univariate LSTM for pressure forecasting
+  • Isolation Forest to spot anomalies
+  • KPIs: MAE, anomaly recall |
+  \| **Day 4** | - **Generative Assistant** (`src/genai_model.py`):
+  • Local fine-tuning of DistilGPT-2 on Markdown corpus
+  • Q\&A endpoints (FastAPI)
+  • Qualitative evaluation (prompt tests) |
+  \| **Day 5** | - **Pipeline & demonstrator** (`src/app.py`):
+  • Orchestration ingestion → sensor prediction → GenAI Q\&A → Streamlit dashboard
+  • MLflow experiments (params & metrics)
+  • Sanity check monitoring (> thresholds) |
+  \| **Day 6** | - **Documentation & tests**:
+  • `README.md` (installation, usage, Dataiku/GCP migration)
+  • Flow diagram in `docs/`
+  • Pytest tests for each module |
+  \| **Day 7** | - **Packaging & delivery**:
+  • Generate final `requirements.txt`
+  • Dockerfile (`python:3.10`) for FastAPI/Streamlit app
+  • Commit & push to GitHub + Cloud Run/Vertex AI deployment plan |
+
+---
+
+## ⚙️ Final Git Structure
 
 ```bash
 storengy-ai-coe-catalog/
 ├── data/
-│   ├── raw/                   # CSV capteurs & corpus Markdown
+│   ├── raw/                   # sensor CSV & Markdown corpus
 │   └── processed/             # after cleaning
 ├── docs/
-│   └── flow_diagram.png       # pipeline visuel
+│   └── flow_diagram.png       # visual pipeline
 ├── src/
 │   ├── ingestion.py           # ingestion & EDA
 │   ├── time_series_model.py   # forecasting & anomaly detection
-│   ├── genai_model.py         # fine-tuning & Q&A GenAI
-│   ├── app.py                 # Streamlit + orchestration FastAPI
-│   └── mlflow_setup.py        # config MLflow
+│   ├── genai_model.py         # fine-tuning & GenAI Q&A
+│   ├── app.py                 # Streamlit + FastAPI orchestration
+│   └── mlflow_setup.py        # MLflow config
 ├── tests/
 │   ├── test_ingestion.py
 │   ├── test_time_series.py
@@ -48,3 +69,4 @@ storengy-ai-coe-catalog/
 ├── README.md
 ├── requirements.txt
 └── .gitignore
+```
